@@ -24,6 +24,15 @@ interface FormState {
   mauSac: string[]; isNew: boolean; isSale: boolean; isBestseller: boolean;
 }
 
+const InputGroup = ({ nhan, children, bat_buoc }: { nhan: string; children: React.ReactNode; bat_buoc?: boolean }) => (
+  <div>
+    <label className="block text-sm font-semibold text-neutral-700 mb-1.5">
+      {nhan} {bat_buoc && <span className="text-red-500">*</span>}
+    </label>
+    {children}
+  </div>
+);
+
 export default function TrangThemSuaSanPham() {
   const [form, setForm] = useState<FormState>({
     tenSanPham: '', thuongHieu: '', danhMuc: 'sunglasses',
@@ -53,15 +62,6 @@ export default function TrangThemSuaSanPham() {
     setDaLuu(true);
     setTimeout(() => setDaLuu(false), 3000);
   };
-
-  const InputGroup = ({ nhan, children, bat_buoc }: { nhan: string; children: React.ReactNode; bat_buoc?: boolean }) => (
-    <div>
-      <label className="block text-sm font-semibold text-neutral-700 mb-1.5">
-        {nhan} {bat_buoc && <span className="text-red-500">*</span>}
-      </label>
-      {children}
-    </div>
-  );
 
   const inputClass = "w-full px-3 py-2.5 text-sm border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C9A84C] bg-white";
 

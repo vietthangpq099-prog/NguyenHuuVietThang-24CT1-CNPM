@@ -6,7 +6,7 @@ export async function GET() {
     const db = await connectDB();
     const orders = await db.all('SELECT * FROM orders ORDER BY ngay_tao DESC');
     return NextResponse.json(orders);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Lỗi truy vấn đơn hàng từ SQLite' }, { status: 500 });
   }
 }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({ success: true, orderId });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Lỗi lưu đơn hàng vào SQLite' }, { status: 500 });
   }
 }

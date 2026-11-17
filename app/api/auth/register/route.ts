@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       message: 'Đăng ký tài khoản thành công!',
       userId: newId
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Lỗi đăng ký:', error);
     return NextResponse.json(
       { error: error?.message || 'Lỗi máy chủ nội bộ. Không thể hoàn tất đăng ký.' },
