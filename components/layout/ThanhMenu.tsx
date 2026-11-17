@@ -13,6 +13,7 @@ const danhMuc = [
   { tenHienThi: 'Kính Thể Thao', duongDan: '/san-pham?danh-muc=sports', bieu: '🏃' },
 ];
  /* SP- BH - VCT - TK */
+/* === 1. SỬA CÁC CHỮ TRÊN MENU (Sản Phẩm, Bảo Hành, Về Chúng Tôi, Tìm Kiếm) TẠI ĐÂY === */
 const menuDieuHuong = [
   { tenHienThi: 'Sản Phẩm', duongDan: '/san-pham', coDropdown: true },
   { tenHienThi: 'Bảo Hành', duongDan: '/bao-hanh', coDropdown: false },
@@ -28,6 +29,35 @@ export default function ThanhMenu() {
   const [moDropdown, setMoDropdown] = useState(false);
   const refTimKiem = useRef<HTMLInputElement>(null);
   const { gioHang } = useGioHang();
+  const [nguoiDung, setNguoiDung] = useState<{ id: string; hoTen: string; email: string; vaiTro: string } | null>(null);
+
+  useEffect(() => {
+    const kiemTraDangNhap = () => {
+      try {
+        let userStr = localStorage.getItem('user');
+        if (!userStr && typeof document !== 'undefined') {
+          const match = document.cookie.match(/(?:^|;\s*)user=([^;]*)/);
+          if (match) userStr = decodeURIComponent(match[1]);
+        }
+        if (userStr) {
+          setNguoiDung(JSON.parse(userStr));
+        } else {
+          setNguoiDung(null);
+        }
+      } catch {
+        setNguoiDung(null);
+      }
+    };
+    kiemTraDangNhap();
+    window.addEventListener('storage', kiemTraDangNhap);
+    return () => window.removeEventListener('storage', kiemTraDangNhap);
+  }, []);
+
+  const dangXuat = () => {
+    localStorage.removeItem('user'); if (typeof document !== 'undefined') document.cookie = 'user=; path=/; max-age=0';
+    setNguoiDung(null);
+    window.location.href = '/dang-nhap';
+  };
   const router = useRouter();
 
   const xuLyTimKiem = (e?: React.FormEvent) => {
@@ -58,6 +88,7 @@ export default function ThanhMenu() {
           : 'bg-white'
       }`}
     >
+      {/* === 2. SỬA SỐ ĐIỆN THOẠI HOTLINE & FREESHIP TRÊN ĐẦU TẠI ĐÂY === */}
       {/* Thanh thông báo */}
       <div className="bg-neutral-950 text-neutral-300 text-xs py-2">
         <div className="container-main flex justify-between items-center">
@@ -79,6 +110,7 @@ export default function ThanhMenu() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-neutral-900 to-neutral-950 flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(201,168,76,0.4)] group-hover:scale-105 transition-all duration-300 border border-neutral-800">
               <Glasses size={22} className="text-[#C9A84C]" />
             </div>
+            {/* === 3. SỬA TÊN THƯƠNG HIỆU / LOGO (OPTIC Eyewear) TẠI ĐÂY === */}
             {/* Chữ Optic Shop xếp sang trọng */}
             <div className="leading-none flex flex-col">
               <span className="font-serif font-black text-2xl text-neutral-950 tracking-tight group-hover:text-[#C9A84C] transition-colors duration-300">
@@ -205,13 +237,63 @@ export default function ThanhMenu() {
               <User size={20} />
             </Link>
 
-            {/* Đăng nhập */}
-            <Link
-              href="/dang-nhap"
-              className="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-neutral-950 rounded-full hover:bg-[#C9A84C] transition-all duration-200"
-            >
-              Đăng nhập
-            </Link>
+            {/* === 4. NÚT ĐĂNG NHẬP / THÔNG TIN TÀI KHOẢN (TỰ ĐỔI KHI ĐÃ ĐĂNG NHẬP) === */}
+            {nguoiDung ? (
+              <div className="relative group hidden sm:block">
+                <button
+                  type="button"
+                  className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-900 rounded-full transition-all duration-200 cursor-pointer border border-neutral-200 shadow-sm"
+                >
+                  <div className="w-7 h-7 rounded-full bg-[#C9A84C] text-white flex items-center justify-center text-xs font-bold uppercase shadow-sm">
+                    {nguoiDung.hoTen ? nguoiDung.hoTen.charAt(0) : 'U'}
+                  </div>
+                  <span className="text-xs font-semibold max-w-[120px] truncate">
+                    {nguoiDung.hoTen}
+                  </span>
+                </button>
+                {/* Dropdown Menu khi di chuột vào tên */}
+                <div className="absolute right-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="bg-white rounded-2xl shadow-xl border border-neutral-100 p-2 text-sm">
+                    <div className="px-3 py-2 border-b border-neutral-100">
+                      <p className="font-bold text-neutral-900 truncate">{nguoiDung.hoTen}</p>
+                      <p className="text-xs text-neutral-500 truncate">{nguoiDung.email}</p>
+                      <span className="inline-block mt-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-[#C9A84C] font-bold uppercase">
+                        {nguoiDung.vaiTro === 'admin' ? 'Quản trị viên' : nguoiDung.vaiTro === 'staff' ? 'Nhân viên' : 'Khách hàng'}
+                      </span>
+                    </div>
+                    {nguoiDung.vaiTro === 'admin' && (
+                      <Link href="/quan-tri" className="flex items-center gap-2 px-3 py-2 rounded-xl text-neutral-700 hover:bg-amber-50 hover:text-[#C9A84C] transition-colors">
+                        📊 Trang Quản Trị
+                      </Link>
+                    )}
+                    {nguoiDung.vaiTro === 'staff' && (
+                      <Link href="/nhan-vien/don-hang" className="flex items-center gap-2 px-3 py-2 rounded-xl text-neutral-700 hover:bg-amber-50 hover:text-[#C9A84C] transition-colors">
+                        📦 Xử Lý Đơn Hàng
+                      </Link>
+                    )}
+                    <Link href="/tai-khoan" className="flex items-center gap-2 px-3 py-2 rounded-xl text-neutral-700 hover:bg-neutral-50 transition-colors">
+                      👤 Hồ sơ cá nhân
+                    </Link>
+                    <Link href="/don-hang" className="flex items-center gap-2 px-3 py-2 rounded-xl text-neutral-700 hover:bg-neutral-50 transition-colors">
+                      🛍️ Đơn hàng của tôi
+                    </Link>
+                    <button
+                      onClick={dangXuat}
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-red-600 hover:bg-red-50 text-left cursor-pointer transition-colors mt-1 border-t border-neutral-100 font-medium"
+                    >
+                      🚪 Đăng xuất
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                href="/dang-nhap"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-neutral-950 rounded-full hover:bg-[#C9A84C] transition-all duration-200"
+              >
+                Đăng nhập
+              </Link>
+            )}
 
             {/* Hamburger mobile */}
             <button
@@ -282,14 +364,39 @@ export default function ThanhMenu() {
               📦 Đơn hàng của tôi
             </Link>
           </div>
-          <div className="flex gap-3 mt-4 pt-4 border-t border-neutral-100">
-            <Link href="/dang-nhap" className="flex-1 text-center py-2.5 text-sm font-semibold border-2 border-neutral-900 text-neutral-900 rounded-full hover:bg-neutral-900 hover:text-white transition-all duration-200" onClick={() => setMoMenuMobile(false)}>
-              Đăng nhập
-            </Link>
-            <Link href="/dang-ky" className="flex-1 text-center py-2.5 text-sm font-semibold bg-[#C9A84C] text-white rounded-full hover:bg-[#A8893A] transition-all duration-200" onClick={() => setMoMenuMobile(false)}>
-              Đăng ký
-            </Link>
-          </div>
+          {nguoiDung ? (
+            <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-neutral-100">
+              <div className="flex items-center gap-3 px-3 py-2 bg-neutral-50 rounded-xl">
+                <div className="w-8 h-8 rounded-full bg-[#C9A84C] text-white flex items-center justify-center font-bold">
+                  {nguoiDung.hoTen?.charAt(0) || 'U'}
+                </div>
+                <div>
+                  <p className="font-semibold text-sm text-neutral-900">{nguoiDung.hoTen}</p>
+                  <p className="text-xs text-neutral-500">{nguoiDung.email}</p>
+                </div>
+              </div>
+              {nguoiDung.vaiTro === 'admin' && (
+                <Link href="/quan-tri" className="text-center py-2 text-sm font-semibold bg-neutral-900 text-white rounded-xl" onClick={() => setMoMenuMobile(false)}>
+                  📊 Vào Trang Quản Trị
+                </Link>
+              )}
+              <button
+                onClick={dangXuat}
+                className="w-full py-2.5 text-sm font-semibold text-red-600 border border-red-200 rounded-xl hover:bg-red-50 cursor-pointer"
+              >
+                🚪 Đăng xuất
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-3 mt-4 pt-4 border-t border-neutral-100">
+              <Link href="/dang-nhap" className="flex-1 text-center py-2.5 text-sm font-semibold border-2 border-neutral-900 text-neutral-900 rounded-full hover:bg-neutral-900 hover:text-white transition-all duration-200" onClick={() => setMoMenuMobile(false)}>
+                Đăng nhập
+              </Link>
+              <Link href="/dang-ky" className="flex-1 text-center py-2.5 text-sm font-semibold bg-[#C9A84C] text-white rounded-full hover:bg-[#A8893A] transition-all duration-200" onClick={() => setMoMenuMobile(false)}>
+                Đăng ký
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </header>

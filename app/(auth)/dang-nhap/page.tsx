@@ -29,11 +29,40 @@ export default function TrangDangNhap() {
     }
 
     setDangTai(true);
-    // Giả lập API call
-    await new Promise((r) => setTimeout(r, 1200));
-    setDangTai(false);
-    // TODO: Tích hợp auth thực tế ở giai đoạn sau
-    alert('Đăng nhập thành công! (Demo)');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, matKhau }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setLoiForm(data.error || 'Đăng nhập thất bại.');
+        setDangTai(false);
+        return;
+      }
+
+      setDangTai(false);
+      // Lưu thông tin người dùng vào localStorage để toàn bộ web nhận diện
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      // Chuyển hướng theo vai trò (admin vào trang quản trị, khách về trang chủ)
+      const role = data.user?.vaiTro?.trim().toLowerCase();
+      if (role === 'admin') {
+        window.location.href = '/quan-tri';
+      } else if (role === 'staff') {
+        window.location.href = '/nhan-vien/don-hang';
+      } else {
+        window.location.href = '/';
+      }
+    } catch {
+      setLoiForm('Không thể kết nối đến máy chủ. Vui lòng thử lại sau.');
+      setDangTai(false);
+    }
   };
 
   return (

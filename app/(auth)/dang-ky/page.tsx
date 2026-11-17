@@ -36,9 +36,35 @@ export default function TrangDangKy() {
     e.preventDefault();
     if (!kiemTraHopLe()) return;
     setDangTai(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setDangTai(false);
-    setThanhCong(true);
+    setLoiForm({});
+
+    try {
+      // Gọi trực tiếp vào Backend API để lưu vào CSDL SQLite
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          hoTen: form.hoTen,
+          email: form.email,
+          soDienThoai: form.soDienThoai,
+          matKhau: form.matKhau,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setLoiForm({ chung: data.error || 'Đăng ký thất bại. Vui lòng thử lại.' });
+        setDangTai(false);
+        return;
+      }
+
+      setDangTai(false);
+      setThanhCong(true);
+    } catch {
+      setLoiForm({ chung: 'Không thể kết nối đến máy chủ. Vui lòng thử lại sau.' });
+      setDangTai(false);
+    }
   };
 
   if (thanhCong) {
@@ -84,6 +110,11 @@ export default function TrangDangKy() {
         {/* Form */}
         <div className="bg-white rounded-3xl border border-neutral-100 shadow-[0_4px_40px_rgba(0,0,0,0.08)] p-8">
           <form onSubmit={xuLyDangKy} className="space-y-4">
+            {loiForm.chung && (
+              <div className="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl text-center">
+                {loiForm.chung}
+              </div>
+            )}
             {/* Họ tên */}
             <div>
               <label className="block text-sm font-semibold text-neutral-700 mb-1.5">Họ và Tên</label>

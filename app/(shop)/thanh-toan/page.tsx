@@ -61,9 +61,10 @@ export default function TrangThanhToan() {
     if (!kiemTra()) return;
     setDangXuLy(true);
 
+    let maDon = 'DH' + Date.now().toString().slice(-6);
     try {
       // Gửi đơn hàng vào SQLite Database qua API route
-      await fetch('/api/orders', {
+      const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -74,12 +75,14 @@ export default function TrangThanhToan() {
           ghiChu,
         }),
       });
+      const data = await res.json();
+      if (data.orderId) maDon = data.orderId;
     } catch {
       // Tự động fallback nếu mất kết nối
     }
 
     xoaHetGio();
-    router.push('/dat-hang-thanh-cong?ma=DH' + Date.now().toString().slice(-6));
+    router.push('/dat-hang-thanh-cong?ma=' + maDon);
   };
 
   const inputClass = (truong: keyof typeof form) =>

@@ -1,57 +1,56 @@
 import { Product, Category } from '@/types';
 
-// Ảnh kính mắt thật — lấy từ Farello.vn (thương hiệu kính Việt chính hãng)
+// Ảnh kính mắt thật — kết hợp Farello.vn chính hãng và Unsplash HD
 const F = 'https://cdn.farello.vn/farello01/2026';
-const K = 'https://cdn.kinhmatlily.com/farello01/2026';
 
 const ANH_KINH = {
   // SWITCHUP 01 — Acetate thời trang (dùng cho Aviator Classic)
-  aviator:   `${K}/6/swavt1-1781967577000.jpeg`,
-  aviator2:  `${K}/6/swh1-1781967590000.jpeg`,
-  aviatorA:  `${F}/6/avt1-1781962278000.jpeg`,
-  aviatorB:  `${F}/6/avt2-1781962284000.jpeg`,
+  aviator:   `${F}/6/avt1-1781962278000.jpeg`,
+  aviator2:  `${F}/6/avt2-1781962284000.jpeg`,
+  aviatorA:  'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80',
+  aviatorB:  'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&auto=format&fit=crop&q=80',
 
-  // IV01 — Kính cận vuông sang trọng (dùng cho Square Premium)
-  square:    `${K}/6/iv1-1781968135000.jpeg`,
-  square2:   `${K}/6/iv1h-1781968144000.jpeg`,
-  squareA:   `${F}/6/avt1-1781962911000.jpeg`,
-  squareB:   `${F}/6/avt2-1781962914000.jpeg`,
+  // IV01 — Kính cận vuông sang trọng (Noir Square Premium - 4 góc nhìn chuẩn studio: Trước, Trái, Phải, Sau)
+  square:    '/images/products/p002/angle-1-front.jpg',
+  square2:   '/images/products/p002/angle-2-left.jpg',
+  squareA:   '/images/products/p002/angle-3-right.jpg',
+  squareB:   '/images/products/p002/angle-4-back.jpg',
 
   // VIRGO 01 — Kính nữ tính duyên dáng (dùng cho Cat-Eye Rose)
-  cateye:    `${K}/6/vg01-1782046007000.jpeg`,
-  cateye2:   `${K}/6/vg01h-1782046046000.jpeg`,
-  cateyeA:   `${F}/6/avt1-1781962513000.jpeg`,
-  cateyeB:   `${F}/6/avt2-1781962489000.jpeg`,
+  cateye:    `${F}/6/avt1-1781962513000.jpeg`,
+  cateye2:   `${F}/6/avt2-1781962489000.jpeg`,
+  cateyeA:   'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=800&auto=format&fit=crop&q=80',
+  cateyeB:   'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=800&auto=format&fit=crop&q=80',
 
   // DT01 — Kính thể thao năng động (dùng cho Sport Pro)
-  sport:     `${K}/6/dt1-1781968060000.jpeg`,
-  sport2:    `${K}/6/dth1-1781968276000.jpeg`,
-  sportA:    `${F}/6/avt1-1781962759000.jpeg`,
-  sportB:    `${F}/6/avt2-1781962767000.jpeg`,
+  sport:     `${F}/6/avt1-1781962759000.jpeg`,
+  sport2:    `${F}/6/avt2-1781962767000.jpeg`,
+  sportA:    'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=80',
+  sportB:    'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800&auto=format&fit=crop&q=80',
 
   // DT02 — Kính tròn vintage (dùng cho Round Vintage)
-  round:     `${K}/6/dt2-1781968103000.jpeg`,
-  round2:    `${K}/6/dt2h-1781968114000.jpeg`,
-  roundA:    `${F}/6/avt1-1781962848000.jpeg`,
-  roundB:    `${F}/6/avt2-1781962851000.jpeg`,
+  round:     `${F}/6/avt1-1781962848000.jpeg`,
+  round2:    `${F}/6/avt2-1781962851000.jpeg`,
+  roundA:    'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=800&auto=format&fit=crop&q=80',
+  roundB:    'https://images.unsplash.com/photo-1509695507497-903c140c43b0?w=800&auto=format&fit=crop&q=80',
 
   // SWITCHUP 02 — Titanium mỏng nhẹ (dùng cho Titanium Slim)
-  titanium:  `${K}/8/Switchup 2-C02-4-1787040067000.jpeg`,
-  titanium2: `${K}/8/Switchup 2-C02-1-1787039923000.jpeg`,
-  titaniumA: `${F}/6/avt1-1781962383000.jpeg`,
-  titaniumB: `${F}/6/avt2-1781962384000.jpeg`,
+  titanium:  `${F}/6/avt1-1781962383000.jpeg`,
+  titanium2: `${F}/6/avt2-1781962384000.jpeg`,
+  titaniumA: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?w=800&auto=format&fit=crop&q=80',
+  titaniumB: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=800&auto=format&fit=crop&q=80',
 
   // VIRGO 2 — Oval màu sắc (dùng cho Oval Colorful)
-  oval:      `${K}/8/Virgo 2-C02-3-1787040668000.jpeg`,
-  oval2:     `${K}/8/Virgo 2-C02-1-1787040672000.jpeg`,
-  ovalA:     `${F}/8/Virgo 2-C03-1-1787041601000.jpeg`,
-  ovalB:     `${F}/8/Virgo 2-C01-1-1787041009000.jpeg`,
+  oval:      `${F}/8/Virgo 2-C03-1-1787041601000.jpeg`,
+  oval2:     `${F}/8/Virgo 2-C01-1-1787041009000.jpeg`,
+  ovalA:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&auto=format&fit=crop&q=80',
+  ovalB:     'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&auto=format&fit=crop&q=80',
 
   // IV02 — Kính mạ vàng cao cấp (dùng cho Aviator Gold)
-  gold:      `${K}/6/iv2-1781968167000.jpeg`,
-  gold2:     `${K}/6/iv2h-1781968173000.jpeg`,
-  goldA:     `${F}/6/avt1-1781962983000.jpeg`,
-  goldB:     `${F}/6/avt2-1781962989000.jpeg`,
+  gold:      `${F}/6/avt1-1781962983000.jpeg`,
+  gold2:     `${F}/6/avt2-1781962989000.jpeg`,
+  goldA:     'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80',
+  goldB:     'https://images.unsplash.com/photo-1582142839970-2b9e04b60f65?w=800&auto=format&fit=crop&q=80',
 };
 
 export const mockProducts: Product[] = [

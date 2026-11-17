@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, Package, Warehouse, ShoppingBag, Users,
-  ChevronRight, Eye, X, Menu,
+  ChevronRight, Eye, X, Menu, LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -72,23 +72,40 @@ function NoiDungSidebar({ onDong }: { onDong?: () => void }) {
         })}
       </nav>
 
-      {/* Thông tin admin */}
+      {/* Thông tin admin & Đăng xuất */}
       <div className="px-4 py-4 border-t border-neutral-800">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-800">
-          <div className="w-9 h-9 bg-[#C9A84C] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-            A
+        <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-neutral-800">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 bg-[#C9A84C] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              A
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-white truncate">Quản Trị Viên</p>
+              <p className="text-xs text-neutral-400 truncate">admin@opticshop.vn</p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <p className="text-sm font-semibold text-white truncate">Quản Trị Viên</p>
-            <p className="text-xs text-neutral-400 truncate">admin@opticshop.vn</p>
-          </div>
+          <Link
+            href="/dang-nhap"
+            title="Đăng xuất"
+            className="p-2 text-neutral-400 hover:text-red-400 hover:bg-neutral-700 rounded-lg transition-colors flex-shrink-0"
+          >
+            <LogOut size={16} />
+          </Link>
         </div>
-        <Link
-          href="/"
-          className="flex items-center justify-center gap-2 mt-3 py-2 text-xs text-neutral-500 hover:text-neutral-300 transition-colors"
-        >
-          ← Về trang khách hàng
-        </Link>
+        <div className="flex items-center justify-between mt-3 px-1">
+          <Link
+            href="/"
+            className="text-xs text-neutral-500 hover:text-neutral-300 transition-colors"
+          >
+            ← Về trang khách hàng
+          </Link>
+          <Link
+            href="/dang-nhap"
+            className="flex items-center gap-1 text-xs font-semibold text-red-400 hover:text-red-300 transition-colors"
+          >
+            <LogOut size={12} /> Đăng xuất
+          </Link>
+        </div>
       </div>
     </div>
   );

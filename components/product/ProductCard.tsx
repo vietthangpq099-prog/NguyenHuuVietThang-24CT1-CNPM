@@ -32,6 +32,7 @@ function layMauHex(tenMau: string): string {
 export default function ProductCard({ product, className }: ProductCardProps) {
   const [daThich, setDaThich] = useState(false);
   const [daThemVaoGio, setDaThemVaoGio] = useState(false);
+  const [anhLoi, setAnhLoi] = useState(false);
   const { themVaoGio } = useGioHang();
 
   const phanTramGiam = product.originalPrice
@@ -45,7 +46,8 @@ export default function ProductCard({ product, className }: ProductCardProps) {
     setTimeout(() => setDaThemVaoGio(false), 2000);
   };
 
-  const anhChinh = product.images[0];
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?w=800&auto=format&fit=crop&q=80';
+  const anhChinh = anhLoi ? FALLBACK_IMAGE : (product.images[0] || FALLBACK_IMAGE);
 
   return (
     <div
@@ -65,6 +67,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              onError={() => setAnhLoi(true)}
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center">

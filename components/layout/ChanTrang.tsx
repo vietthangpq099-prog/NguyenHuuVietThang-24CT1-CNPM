@@ -105,7 +105,7 @@ export default function ChanTrang() {
             </h3>
             <ul className="space-y-3">
               {footerLinks.products.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-neutral-400 hover:text-[#C9A84C] transition-colors duration-200"
@@ -124,7 +124,7 @@ export default function ChanTrang() {
             </h3>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-neutral-400 hover:text-[#C9A84C] transition-colors duration-200"
@@ -143,7 +143,7 @@ export default function ChanTrang() {
             </h3>
             <ul className="space-y-3 mb-8">
               {footerLinks.company.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-neutral-400 hover:text-[#C9A84C] transition-colors duration-200"

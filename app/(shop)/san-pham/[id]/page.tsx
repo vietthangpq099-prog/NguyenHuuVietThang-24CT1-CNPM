@@ -160,26 +160,39 @@ export default function TrangChiTietSanPham({ params }: { params: Promise<{ id: 
               </div>
             </div>
 
-            {/* Số lượng */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center border-2 border-neutral-200 rounded-full overflow-hidden">
-                <button onClick={() => setSoLuong((v) => Math.max(1, v - 1))} className="px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer text-neutral-700">
-                  <Minus size={16} />
-                </button>
-                <span className="w-12 text-center font-bold text-neutral-900">{soLuong}</span>
-                <button onClick={() => setSoLuong((v) => Math.min(sanPham.stock, v + 1))} className="px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer text-neutral-700">
-                  <Plus size={16} />
-                </button>
+            {/* Số lượng & Trái tim Yêu thích (nằm trên nút Thêm giỏ hàng) */}
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center border-2 border-neutral-200 rounded-full overflow-hidden">
+                  <button onClick={() => setSoLuong((v) => Math.max(1, v - 1))} className="px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer text-neutral-700">
+                    <Minus size={16} />
+                  </button>
+                  <span className="w-12 text-center font-bold text-neutral-900">{soLuong}</span>
+                  <button onClick={() => setSoLuong((v) => Math.min(sanPham.stock, v + 1))} className="px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer text-neutral-700">
+                    <Plus size={16} />
+                  </button>
+                </div>
+                <p className="text-xs text-neutral-400">Còn <strong className="text-neutral-700">{sanPham.stock}</strong> sản phẩm</p>
               </div>
-              <p className="text-xs text-neutral-400">Còn <strong className="text-neutral-700">{sanPham.stock}</strong> sản phẩm</p>
+
+              {/* Trái tim yêu thích chuyển lên phía trên */}
+              <button
+                type="button"
+                onClick={() => setDaThich(!daThich)}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full border-2 border-neutral-200 hover:border-red-300 hover:bg-red-50/50 transition-all cursor-pointer text-sm font-semibold text-neutral-600"
+                title="Lưu vào danh sách yêu thích"
+              >
+                <Heart size={18} className={daThich ? 'fill-red-500 text-red-500' : 'text-neutral-400'} />
+                <span>{daThich ? 'Đã thích' : 'Yêu thích'}</span>
+              </button>
             </div>
 
-            {/* Nút hành động */}
-            <div className="flex gap-3 mb-4">
+            {/* 2 Nút Thêm vào giỏ hàng & Mua Ngay bằng nhau 100% width */}
+            <div className="space-y-3 mb-8">
               <button
                 onClick={xuLyThemVaoGio}
                 className={cn(
-                  'flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-bold text-sm transition-all duration-200 cursor-pointer shadow-md',
+                  'w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold text-sm transition-all duration-200 cursor-pointer shadow-md',
                   daThemVaoGio
                     ? 'bg-emerald-500 text-white shadow-emerald-200'
                     : 'bg-neutral-950 hover:bg-neutral-700 text-white shadow-neutral-200'
@@ -188,22 +201,15 @@ export default function TrangChiTietSanPham({ params }: { params: Promise<{ id: 
                 <ShoppingCart size={18} />
                 {daThemVaoGio ? '✓ Đã thêm vào giỏ!' : 'Thêm vào giỏ hàng'}
               </button>
-              <button
-                onClick={() => setDaThich(!daThich)}
-                className="p-3.5 rounded-full border-2 border-neutral-200 hover:border-red-300 transition-all cursor-pointer"
-              >
-                <Heart size={18} className={daThich ? 'fill-red-500 text-red-500' : 'text-neutral-500'} />
-              </button>
-            </div>
 
-            {/* Mua ngay */}
-            <Link
-              href="/thanh-toan"
-              onClick={xuLyThemVaoGio}
-              className="block w-full text-center py-3.5 rounded-full font-bold text-sm bg-[#C9A84C] hover:bg-[#A8893A] text-white transition-all duration-200 mb-8 shadow-[0_4px_20px_rgba(201,168,76,0.4)]"
-            >
-              🛍️ Mua Ngay
-            </Link>
+              <Link
+                href="/thanh-toan"
+                onClick={xuLyThemVaoGio}
+                className="block w-full text-center py-3.5 rounded-full font-bold text-sm bg-[#C9A84C] hover:bg-[#A8893A] text-white transition-all duration-200 shadow-[0_4px_20px_rgba(201,168,76,0.4)]"
+              >
+                🛍️ Mua Ngay
+              </Link>
+            </div>
 
             {/* Chính sách */}
             <div className="grid grid-cols-3 gap-3">

@@ -1,3 +1,9 @@
+// =========================================================================================
+// 🎯 DÀNH CHO BẠN KHI VẤN ĐÁP:
+// NẾU CÔ YÊU CẦU SỬA THANH HEADER (LOGO "OPTIC", MENU "SẢN PHẨM / BẢO HÀNH", NÚT ĐĂNG NHẬP...):
+// 👉 BẤM CTRL + P -> GÕ: ThanhMenu -> LÀ MỞ NGAY FILE: components/layout/ThanhMenu.tsx
+// 💡 LÝ DO: Header là thanh điều hướng dùng chung toàn web (Layout), không nằm riêng trong Banner!
+// =========================================================================================
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -18,10 +24,10 @@ const slides = [
       'Khám phá hàng trăm mẫu kính mắt cao cấp. Từ kính mát thời trang đến kính cận chính xác — mỗi đôi kính là một tuyên ngôn phong cách.',
     
       cta: 'Khám Phá Ngay',
-      ctaHref: '/products',
+      ctaHref: '/san-pham',
     
     secondaryCta: 'Đặt Lịch Đo Mắt',
-    secondaryCtaHref: '/services/eye-test',
+    secondaryCtaHref: '/bao-hanh',
 
     // THỐNG KÊ: 3 con số hiển thị phía dưới nút bấm
     stats: [
@@ -48,11 +54,11 @@ const slides = [
 
     // NÚT VÀNG slide 2
     cta: 'Mua Ngay',
-    ctaHref: '/products?category=sunglasses&filter=sale',
+    ctaHref: '/san-pham?danh-muc=sunglasses',
 
     // NÚT VIỀN TRẮNG slide 2
     secondaryCta: 'Xem Tất Cả Sale',
-    secondaryCtaHref: '/products?filter=sale',
+    secondaryCtaHref: '/san-pham',
 
     // THỐNG KÊ slide 2
     stats: [

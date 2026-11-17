@@ -18,11 +18,11 @@ export async function POST(req: NextRequest) {
     const orderId = 'DH' + Date.now().toString().slice(-6);
 
     await db.run(
-      `INSERT INTO orders (id, user_id, tong_tien, phi_ship, trang_thai, dia_chi_giao, phuong_thuc_tt, ghi_chu)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO orders (id, user_id, tong_tien, phi_ship, trang_thai, dia_chi_giao, phuong_thuc_tt, ghi_chu, ngay_tao, ngay_cap_nhat)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now', '+7 hours'), datetime('now', '+7 hours'))`,
       [
         orderId,
-        body.userId || 'u001',
+        body.userId || 'u552632',
         body.tongTien || 0,
         body.phiShip || 0,
         'pending',
